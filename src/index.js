@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { wscQuestions } from './wsc'
+import { wscByNumber, wscQuestions } from './wsc'
 import './styles.css'
 
 class App extends React.Component {
@@ -12,13 +12,14 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <h1>Current question: {this.state.currentQuestion}</h1>
+                <h1>Ask a question</h1>
                 <input
                     value={this.state.searchQuery}
                     name="searchQuery"
                     onChange={this.handleInputChange}
                 />
                 {this.renderAutoComplete()}
+                {this.renderCurrentQuestion()}
             </div>
         )
     }
@@ -42,6 +43,7 @@ class App extends React.Component {
                     const index = wscQuestions.indexOf(text) + 1
                     return (
                         <li
+                            id={`footnote-${index}`}
                             key={index}
                             onClick={this.handleSelectQuestion(index)}
                         >
@@ -53,6 +55,39 @@ class App extends React.Component {
             }
         }
     }
+
+    renderCurrentQuestion = () => {
+        const { currentQuestion } = this.state
+        if (currentQuestion) {
+            const data = wscByNumber[currentQuestion]
+            return (
+                <div>
+                    <h1>{data.question}</h1>
+                    <p>{data.answer}</p>
+                    {this.renderProofTexts(data.proofTexts)}
+                </div>
+            )
+        }
+    }
+
+    renderProofTexts = proofTexts => {
+        if (proofTexts) {
+            const output = []
+            for (let i = 1; i <= Object.keys(proofTexts).length; i++) {
+                output.push(
+                    <li key={i}>{this.renderScriptureLinks(proofTexts[i])}</li>
+                )
+            }
+            return <ol>{output}</ol>
+        }
+    }
+
+    renderScriptureLinks = passages =>
+        passages.map((passage, i) => (
+            <a href="#test" key={i}>
+                {passage}
+            </a>
+        ))
 }
 
 const rootElement = document.getElementById('root')
