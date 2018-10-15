@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 import { wscByNumber, wscQuestions } from './wsc'
 import './styles.css'
+import * as ProofText from './components/ProofText'
 
 class App extends React.Component {
     state = {
@@ -75,7 +76,9 @@ class App extends React.Component {
             const output = []
             for (let i = 1; i <= Object.keys(proofTexts).length; i++) {
                 output.push(
-                    <li key={i}>{this.renderScriptureLinks(proofTexts[i])}</li>
+                    <ProofText.Li key={i}>
+                        {this.renderScriptureLinks(proofTexts[i])}
+                    </ProofText.Li>
                 )
             }
             return <ol>{output}</ol>
@@ -84,9 +87,9 @@ class App extends React.Component {
 
     renderScriptureLinks = passages =>
         passages.map((passage, i) => (
-            <a href="#test" key={i}>
+            <ProofText.A href="#test" key={i}>
                 {passage}
-            </a>
+            </ProofText.A>
         ))
 }
 
