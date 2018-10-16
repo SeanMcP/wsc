@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import * as Icon from 'react-feather'
+import { Transition } from 'react-spring'
 
 import AutoComplete from '../functional/AutoComplete'
 import Input from '../atoms/Input'
@@ -19,10 +20,16 @@ const StyledDiv = styled.div`
     display: flex;
     justify-content: space-between;
     overflow: hidden;
+    transition: all 100ms ease-in-out;
 `
 
 const ButtonContainer = styled.div`
-    padding: 0 1em;
+    align-items: center;
+    color: #999;
+    display: flex;
+    justify-content: center;
+    padding: 0 1.5em;
+    position: relative;
 `
 
 const Search = ({ handleClear, handleSelectQuestion, ...props }) => (
@@ -30,11 +37,30 @@ const Search = ({ handleClear, handleSelectQuestion, ...props }) => (
         <StyledDiv isQuery={props.value}>
             <Input {...props} />
             <ButtonContainer>
+                <Transition
+                    from={{ position: 'absolute', opacity: 0 }}
+                    enter={{ opacity: 1 }}
+                    leave={{ opacity: 0 }}
+                >
+                    {props.value
+                        ? styles => (
+                              <div style={styles}>
+                                  <Icon.Delete onClick={handleClear} />
+                              </div>
+                          )
+                        : styles => (
+                              <div style={styles}>
+                                  <Icon.Search />
+                              </div>
+                          )}
+                </Transition>
+                {/*
                 {props.value ? (
                     <Icon.Delete onClick={handleClear} />
                 ) : (
                     <Icon.Search />
                 )}
+                */}
             </ButtonContainer>
         </StyledDiv>
         <AutoComplete

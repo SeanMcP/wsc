@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { Spring } from 'react-spring'
 
 import { wscQuestions } from '../../wsc'
 
@@ -10,6 +11,7 @@ const StyledUl = styled.ul`
     border-bottom-left-radius: 1em;
     border-bottom-right-radius: 1em;
     border-top: 1px solid #f1f1f1;
+    height: ${props => props.height};
     left: 0;
     list-style: none;
     margin: 0;
@@ -19,6 +21,7 @@ const StyledUl = styled.ul`
     position: absolute;
     right: 0;
     top: 100%;
+    transition: all 200ms ease-in-out;
 `
 
 const StyledLi = styled.li`
@@ -50,13 +53,23 @@ const AutoComplete = ({ handleSelectQuestion, searchQuery }) => {
                 )
             })
             return (
-                <StyledUl>
-                    {listItems.length ? (
-                        listItems
-                    ) : (
-                        <StyledLi>No results found</StyledLi>
+                <Spring
+                    delay={50}
+                    from={{ height: 0, opacity: 0 }}
+                    to={{ height: 'auto', opacity: 1 }}
+                >
+                    {spring => (
+                        <div style={spring}>
+                            <StyledUl>
+                                {listItems.length ? (
+                                    listItems
+                                ) : (
+                                    <StyledLi>No results found</StyledLi>
+                                )}
+                            </StyledUl>
+                        </div>
                     )}
-                </StyledUl>
+                </Spring>
             )
         }
     }
