@@ -6,6 +6,7 @@ const StyledButton = styled.button`
     background-color: ${props => props.backgroundColor};
     border: 0;
     color: ${props => props.color};
+    cursor: pointer;
     font-family: inherit;
     font-size: inherit;
 

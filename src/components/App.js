@@ -2,7 +2,6 @@ import React from 'react'
 
 import { wscByNumber, wscQuestions } from '../wsc'
 import * as ProofText from './ProofText'
-import Input from './atoms/Input'
 import Search from './compounds/Search'
 
 class App extends React.Component {
@@ -13,14 +12,14 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <h1>Ask a question</h1>
                 <Search
                     handleClear={this.handleClear}
+                    handleSelectQuestion={this.handleSelectQuestion}
                     name="searchQuery"
                     onChange={this.handleInputChange}
+                    placeholder="Ask a question"
                     value={this.state.searchQuery}
                 />
-                {this.renderAutoComplete()}
                 {this.renderCurrentQuestion()}
             </div>
         )
@@ -66,7 +65,7 @@ class App extends React.Component {
             const data = wscByNumber[currentQuestion]
             return (
                 <div>
-                    <h1>{data.question}</h1>
+                    <h2>{data.question}</h2>
                     <p>{data.answer}</p>
                     {this.renderProofTexts(data.proofTexts)}
                 </div>
