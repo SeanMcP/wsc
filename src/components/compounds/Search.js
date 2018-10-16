@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import AutoComplete from '../AutoComplete'
+import AutoComplete from '../functional/AutoComplete'
 import Button from '../atoms/Button'
 import Input from '../atoms/Input'
 

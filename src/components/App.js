@@ -1,8 +1,16 @@
 import React from 'react'
+import styled from 'styled-components'
 
-import { wscByNumber, wscQuestions } from '../wsc'
-import * as ProofText from './ProofText'
+import { wscByNumber } from '../wsc'
+import * as ProofText from './functional/ProofText'
 import Search from './compounds/Search'
+
+const StyledDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 2em;
+`
 
 class App extends React.Component {
     state = {
@@ -11,7 +19,7 @@ class App extends React.Component {
     }
     render() {
         return (
-            <div className="App">
+            <StyledDiv>
                 <Search
                     handleClear={this.handleClear}
                     handleSelectQuestion={this.handleSelectQuestion}
@@ -21,7 +29,7 @@ class App extends React.Component {
                     value={this.state.searchQuery}
                 />
                 {this.renderCurrentQuestion()}
-            </div>
+            </StyledDiv>
         )
     }
 
@@ -34,30 +42,6 @@ class App extends React.Component {
             currentQuestion: num,
             searchQuery: ''
         })
-
-    renderAutoComplete = () => {
-        const { searchQuery } = this.state
-        if (searchQuery) {
-            const match = wscQuestions.filter(q =>
-                q.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-            if (match) {
-                const listItems = match.map((text, i) => {
-                    const index = wscQuestions.indexOf(text) + 1
-                    return (
-                        <li
-                            id={`footnote-${index}`}
-                            key={index}
-                            onClick={this.handleSelectQuestion(index)}
-                        >
-                            {text}
-                        </li>
-                    )
-                })
-                return <ul>{listItems}</ul>
-            }
-        }
-    }
 
     renderCurrentQuestion = () => {
         const { currentQuestion } = this.state

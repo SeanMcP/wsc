@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { wscQuestions } from '../wsc'
+import { wscQuestions } from '../../wsc'
 
 const StyledUl = styled.ul`
     background: white;
